@@ -61,7 +61,8 @@ fit_model <- function(prm) {
   } else if(family == 'lm-log') {
     # Fit a linear regression model with log transformation
     m = lm(
-      as.formula(paste0('log(', varname.dad, '.dad) ~ ', varname.expl, '.expl')),
+      as.formula(paste0('log(', varname.dad, '.dad) ~ ',
+                        'log(', varname.expl, '.expl)')),
       data = df
     )
   } else {
