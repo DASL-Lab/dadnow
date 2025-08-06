@@ -46,3 +46,30 @@ fake_expl <- function(dad) {
   )
   return(res)
 }
+
+
+#' Extract the virus of a fitted model.
+#'
+#' @param fitted.model List. Fitted model.
+#'
+#' @returns String. Virus of the fitted model.
+#' @export
+#'
+get_virus <- function(fitted.model) {
+  res = unique(fitted.model$data$virus)
+  if(length(res) != 1) stop('More than one virus in fitted model is forbidden.')
+  return(res)
+}
+
+#' Extract the geography of a fitted model.
+#'
+#' @param fitted.model List. Fitted model.
+#'
+#' @returns String. geography of the fitted model.
+#' @export
+#'
+get_geo <- function(fitted.model) {
+  res = unique(fitted.model$data$geo)
+  if(length(res) != 1) stop('More than one geography in fitted model is forbidden.')
+  return(res)
+}

@@ -94,4 +94,60 @@ check_date_range_fit <- function(d) {
   return(TRUE)
 }
 
+#' Check the validity of a fitted model
+#'
+#' @param fitted.model A list containing the fitted model
+#' and its associated data.
+#'
+#' @returns Logical value indicating whether the fitted model is valid.
+#'
+check_fitted_model <- function(fitted.model) {
+  if (!is.list(fitted.model)) {
+    stop("fitted.model must be a list.")
+  }
+  check1 = all(names(fitted.model) %in% c(
+    "model", "data", "family",
+    "varname.dad", "varname.expl",
+    "date.range.fit"))
+  if (!check1) {
+    stop("fitted.model must contain the following elements: 'model', 'data', 'family', 'varname.dad', 'varname.expl', and 'date.range.fit'.")
+  }
+  return(TRUE)
+}
+
+#' Check the compatibility of the new exploratory data
+#' and the fitted model used for nowcast.
+#'
+#' @param newdata.expl Dataframe of new explanatory data
+#' @param fitted.model List. Fitted model.
+#'
+#' @returns  Logical value indicating whether the new explanatory data is valid.
+#'
+check_newdata_expl <- function(newdata.expl, fitted.model) {
+  if (!is.data.frame(newdata.expl)) {
+    stop("newdata.expl must be a data frame.")
+  }
+  check1 = all(c('date','virus','geo',fitted.model$varname.expl) %in%
+                 colnames(newdata.expl) )
+  if(!check1) {
+    stop("newdata.expl does not have the expected format.")
+  }
+
+  check.dates = any(newdata.expl$date %in% fitted.model$data$date)
+  if (check.dates) {
+    stop("newdata.expl contains dates that are already present in the fitted model's data.")
+  }
+
+  virus = unique(fitted.model$data$virus)
+  check.virus = virus %in% unique(newdata.expl$virus)
+  if(!check.virus)
+    stop('Fitted virus `',virus,'` not present in new explanatory data.')
+
+  geo = unique(fitted.model$data$geo)
+  check.geo = geo %in% unique(newdata.expl$geo)
+  if(!check.geo)
+    stop('Fitted geography `',geo,'` not present in new explanatory data.')
+
+  return(TRUE)
+}
 

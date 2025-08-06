@@ -4,30 +4,26 @@
 \alias{fit_model}
 \title{Fit a model to the data}
 \usage{
-fit_model(
-  family,
-  data.dad,
-  data.expl,
-  varname.dad,
-  varname.expl,
-  date.range.fit
-)
+fit_model(prm)
 }
 \arguments{
-\item{family}{String. Type of model to fit. "lm" for linear regression.
-"lm-log" for linear regression with log transformation.}
+\item{prm}{List of parameters. Must contain:
+ \itemize{
+  \item \code{family} String. Type of model to fit. "lm" for linear regression.
+"lm-log" for linear regression with log transformation.
 
-\item{data.dad}{Dataframe of DAD data. Must contain the following columns:
-date, virus, geo, count, percapita}
+  \item \code{data.dad} Dataframe of DAD data. Must contain the following columns:
+date, virus, geo, count, percapita
 
-\item{data.expl}{Dataframe of explanatory data. Must contain the following columns:
-date, virus, geo, varname.expl}
+  \item  \code{data.expl} Dataframe of explanatory data. Must contain the following columns:
+date, virus, geo, varname.expl
 
-\item{varname.dad}{String. Name of the variable in data.dad to fit the model to.}
+  \item  \code{varname.dad} String. Name of the variable in data.dad to fit the model to.
 
-\item{varname.expl}{String. Name of the variable in data.expl to use as an explanatory variable.}
+  \item  \code{varname.expl} String. Name of the variable in data.expl to use as an explanatory variable.
 
-\item{date.range.fit}{Vector of two dates. The model will be fit to data within this date range.}
+  \item  \code{date.range.fit} Vector of two dates. The model will be fit to data within this date range.
+ }}
 }
 \value{
 A fitted model object.

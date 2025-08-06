@@ -66,7 +66,9 @@ filter_date_range_fit <- function(d,
     return(d)
   }
   res = d |>
-    dplyr::filter(between(date, date.range.fit[1], date.range.fit[2]))
+    dplyr::filter(dplyr::between(date,
+                                 date.range.fit[1],
+                                 date.range.fit[2]))
 
   if(nrow(res) == 0) {
     stop("No data in the specified date range.")
@@ -78,6 +80,32 @@ filter_date_range_fit <- function(d,
   return(res)
 }
 
+#' Process new explanatory data before nowcasting.
+#'
+#' @param newdata.expl Dataframe of new explanatory data
+#' @param fitted.model List. Fitted model.
+#'
+#' @returns Processed dataframe
+#'
+process_newdata_expl <- function(newdata.expl,
+                                 fitted.model) {
 
+  virus.model = unique(fitted.model$data$virus)
+  geo.model   = unique(fitted.model$data$geo)
+  v.expl      = fitted.model$varname.expl
+
+  res = newdata.expl |>
+    # Filter any irrelevant information
+    dplyr::filter(virus == virus.model,
+                  geo == geo.model)|>
+    # append suffix because this is how
+    # it is identified in the fitted model
+    dplyr::rename(!!paste0(v.expl, '.expl') := !!v.expl)
+
+  if(nrow(res) < nrow(newdata.expl))
+    warning('New explanatory data contains irrelevant imformation.')
+
+  return(res)
+}
 
 

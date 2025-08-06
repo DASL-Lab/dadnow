@@ -4,7 +4,7 @@
 \alias{join_dad_expl}
 \title{Join DAD and explanatory data}
 \usage{
-join_dad_expl(data.dad, data.expl, varname.dad)
+join_dad_expl(data.dad, data.expl, varname.dad, varname.expl)
 }
 \arguments{
 \item{data.dad}{Dataframe of DAD data}
