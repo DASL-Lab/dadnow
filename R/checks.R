@@ -17,13 +17,6 @@ check_dad_data <- function(dad) {
     stop("The 'date' column in DAD data must be of Date type.")
   }
 
-  if (!is.numeric(dad$count) || !is.numeric(dad$percapita)) {
-    stop("The 'count' and 'percapita' columns in DAD data must be numeric.")
-  }
-
-  if (any(dad$count < 0, na.rm = TRUE)) {
-    stop("The 'count' column in DAD data contains negative values.")
-  }
   return(TRUE)
 }
 
