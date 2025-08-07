@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{fake_dad}
 \alias{fake_dad}
-\title{Generate fake DAD data for testing purposes}
+\title{Create fake DAD data for testing purposes.}
 \usage{
 fake_dad()
 }
@@ -10,7 +10,7 @@ fake_dad()
 A dataframe.
 }
 \description{
-Generate fake DAD data for testing purposes
+Create fake DAD data for testing purposes.
 }
 \examples{
 

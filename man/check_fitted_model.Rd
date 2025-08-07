@@ -16,3 +16,4 @@ Logical value indicating whether the fitted model is valid.
 \description{
 Check the validity of a fitted model
 }
+\keyword{internal}

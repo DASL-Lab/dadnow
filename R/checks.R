@@ -3,7 +3,7 @@
 #' @param dad
 #'
 #' @returns Logical value indicating whether the data is valid
-#' @export
+#' @keywords internal
 #'
 check_dad_data <- function(dad) {
 
@@ -33,7 +33,7 @@ check_dad_data <- function(dad) {
 #' @param x a data frame containing explanatory data
 #'
 #' @returns Logical value indicating whether the data is valid
-#' @export
+#' @keywords internal
 #'
 check_expl_data <- function(x) {
   required_cols = c("date", "virus", "geo")
@@ -54,6 +54,7 @@ check_expl_data <- function(x) {
 #' @param varname.dad String. Must be either "count" or "percapita".
 #'
 #' @returns Logical value indicating whether the variable name is valid
+#' @keywords internal
 #'
 check_varname_dad <- function(varname.dad) {
   if (!varname.dad %in% c("count", "percapita")) {
@@ -68,6 +69,7 @@ check_varname_dad <- function(varname.dad) {
 #' @param varname.expl String. Name of the variable in data.expl to use as an explanatory variable.
 #'
 #' @returns Logical value indicating whether the variable name is valid
+#' @keywords internal
 #'
 check_varname_expl <- function(data.expl, varname.expl) {
   if (!varname.expl %in% colnames(data.expl)) {
@@ -80,6 +82,7 @@ check_varname_expl <- function(data.expl, varname.expl) {
 #'
 #' @param date.fit.range Vector of two dates.
 #' The first date must be earlier than the second date.
+#' @keywords internal
 #'
 check_date_range_fit <- function(d) {
   if (length(d) != 2) {
@@ -100,6 +103,7 @@ check_date_range_fit <- function(d) {
 #' and its associated data.
 #'
 #' @returns Logical value indicating whether the fitted model is valid.
+#' @keywords internal
 #'
 check_fitted_model <- function(fitted.model) {
   if (!is.list(fitted.model)) {
@@ -122,6 +126,7 @@ check_fitted_model <- function(fitted.model) {
 #' @param fitted.model List. Fitted model.
 #'
 #' @returns  Logical value indicating whether the new explanatory data is valid.
+#' @keywords internal
 #'
 check_newdata_expl <- function(newdata.expl, fitted.model) {
   if (!is.data.frame(newdata.expl)) {

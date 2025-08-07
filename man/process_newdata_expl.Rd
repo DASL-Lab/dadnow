@@ -17,3 +17,4 @@ Processed dataframe
 \description{
 Process new explanatory data before nowcasting.
 }
+\keyword{internal}

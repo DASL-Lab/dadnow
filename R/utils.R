@@ -1,6 +1,6 @@
 
 
-#' Generate fake DAD data for testing purposes
+#' Create fake DAD data for testing purposes.
 #'
 #' @returns A dataframe.
 #' @export
@@ -24,7 +24,7 @@ fake_dad <- function() {
   return(res)
 }
 
-#' Create fake explanatory data from existing DAD for testing purposes
+#' Create fake explanatory data from existing DAD for testing purposes.
 #'
 #' @param dad Dataframe of DAD data.
 #'

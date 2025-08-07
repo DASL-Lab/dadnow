@@ -2,7 +2,7 @@
 % Please edit documentation in R/fit_model.R
 \name{fit_model}
 \alias{fit_model}
-\title{Fit a model to the data}
+\title{Fit a model to the data.}
 \usage{
 fit_model(prm)
 }
@@ -29,5 +29,22 @@ date, virus, geo, varname.expl
 A fitted model object.
 }
 \description{
-Fit a model to the data
+The goal of this function is to fit a statistical model, typically
+a regression, of the DAD data against another "explanatory" data set.
+This fitted model will then be used downstream to nowcast DAD data
+from new (i.e. more recent than the latest DAD observation) explanatory data.
+
+The data consists of a pair of data sets, one being DAD and the other
+being another data source that plays the role of the
+explanatory variable (e.g., CNISP, PTSOS, RVDSS, ...)
+
+Moreover, the variables used in each data set must be selected.
+For example, the user can choose to work with counts of DAD hospital admissions
+or per-capita rates. This choice determines the input parameter `varname.dad`.
+Similarly, for the explanatory data set, the variable name used to fit the model
+must be selected. Its name depends on the data set itself (the column name used)
+and is set through the input parameter `varname.expl`.
+
+This function is a wrapper for several possible models. The type of the
+model used is set with the input parameter `family`.
 }

@@ -17,3 +17,4 @@ Logical value indicating whether the variable name is valid
 \description{
 Check if the variable name for explanatory data is valid
 }
+\keyword{internal}

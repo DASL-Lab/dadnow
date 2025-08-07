@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{fake_expl}
 \alias{fake_expl}
-\title{Create fake explanatory data from existing DAD for testing purposes}
+\title{Create fake explanatory data from existing DAD for testing purposes.}
 \usage{
 fake_expl(dad)
 }
@@ -13,7 +13,7 @@ fake_expl(dad)
 A dataframe with explanatory data.
 }
 \description{
-Create fake explanatory data from existing DAD for testing purposes
+Create fake explanatory data from existing DAD for testing purposes.
 }
 \examples{
 data.dad = fake_dad()

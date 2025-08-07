@@ -2,14 +2,15 @@
 % Please edit documentation in R/nowcast.R
 \name{nowcast}
 \alias{nowcast}
-\title{Nowcast DAD data using a fresh explanatory data set.}
+\title{Nowcast DAD data using fresh explanatory data.}
 \usage{
 nowcast(fitted.model, newdata.expl, ci = 0.95, floor.zero = TRUE)
 }
 \arguments{
-\item{fitted.model}{List. Fitted model.}
+\item{fitted.model}{List. Fitted model as created by the function \code{fit_model()}.}
 
-\item{newdata.expl}{Dataframe of new explanatory data.}
+\item{newdata.expl}{Dataframe of new explanatory data. Must contain colums named
+\code{date, virus, geo} and a column name matching \code{fitted.model$varname.expl}.}
 
 \item{ci}{Numerical. Confidence interval of the prediction. Must be between 0 and 1.}
 
@@ -19,5 +20,5 @@ nowcast(fitted.model, newdata.expl, ci = 0.95, floor.zero = TRUE)
 Dataframe of nowcasted DAD values.
 }
 \description{
-Nowcast DAD data using a fresh explanatory data set.
+Nowcast DAD data using fresh explanatory data.
 }

@@ -6,6 +6,7 @@
 #' @param varname.dad String. Name of the variable in data.dad to fit the model to.
 #'
 #' @returns Dataframe
+#' @keywords internal
 #'
 process_varname_dad <- function(data.dad, varname.dad) {
   if(varname.dad == 'count'){
@@ -29,6 +30,7 @@ process_varname_dad <- function(data.dad, varname.dad) {
 #' @param varname.expl String. Name of the variable in data.expl to use as an explanatory variable.
 #'
 #' @returns Dataframe
+#' @keywords internal
 #'
 process_varname_expl <- function(data.expl, varname.expl) {
   res = data.expl |>
@@ -44,6 +46,7 @@ process_varname_expl <- function(data.expl, varname.expl) {
 #' @param varname.expl String. Name of the variable in data.expl to use as an explanatory variable.
 #'
 #' @returns Dataframe
+#' @keywords internal
 #'
 join_dad_expl <- function(data.dad,
                           data.expl,
@@ -86,6 +89,7 @@ filter_date_range_fit <- function(d,
 #' @param fitted.model List. Fitted model.
 #'
 #' @returns Processed dataframe
+#' @keywords internal
 #'
 process_newdata_expl <- function(newdata.expl,
                                  fitted.model) {

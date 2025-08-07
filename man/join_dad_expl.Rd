@@ -21,3 +21,4 @@ Dataframe
 \description{
 Join DAD and explanatory data
 }
+\keyword{internal}

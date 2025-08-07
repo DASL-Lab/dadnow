@@ -15,3 +15,4 @@ Logical value indicating whether the data is valid
 \description{
 check validity of DAD data
 }
+\keyword{internal}

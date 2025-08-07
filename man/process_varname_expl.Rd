@@ -19,3 +19,4 @@ Dataframe
 Process the variable name for explanatory data
 by appending the suffix '.expl' to the variable name
 }
+\keyword{internal}

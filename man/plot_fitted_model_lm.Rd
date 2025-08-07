@@ -4,10 +4,10 @@
 \alias{plot_fitted_model_lm}
 \title{Plot the fitted model: regression line, data points used for the fit and fit metrics.}
 \usage{
-plot_fitted_model_lm(fitted_model)
+plot_fitted_model_lm(fitted.model)
 }
 \arguments{
-\item{fitted_model}{List. Fitted model.}
+\item{fitted.model}{List. Fitted model as created by the function \code{fit_model()}.}
 }
 \value{
 A ggplot object.
@@ -15,3 +15,4 @@ A ggplot object.
 \description{
 Plot the fitted model: regression line, data points used for the fit and fit metrics.
 }
+\keyword{internal}

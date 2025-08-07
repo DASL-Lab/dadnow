@@ -1,8 +1,9 @@
 
-#' Nowcast DAD data using a fresh explanatory data set.
+#' Nowcast DAD data using fresh explanatory data.
 #'
-#' @param fitted.model List. Fitted model.
-#' @param newdata.expl Dataframe of new explanatory data.
+#' @param fitted.model List. Fitted model as created by the function \code{fit_model()}.
+#' @param newdata.expl Dataframe of new explanatory data. Must contain colums named
+#' \code{date, virus, geo} and a column name matching \code{fitted.model$varname.expl}.
 #' @param ci Numerical. Confidence interval of the prediction. Must be between 0 and 1.
 #' @param floor.zero Logical. If `TRUE` nowcast will be floored at 0 when estimates are negatives.
 #'

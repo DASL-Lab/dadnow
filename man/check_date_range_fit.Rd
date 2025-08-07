@@ -13,3 +13,4 @@ The first date must be earlier than the second date.}
 \description{
 Check if the date range is valid
 }
+\keyword{internal}

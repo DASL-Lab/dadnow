@@ -19,3 +19,4 @@ Logical value indicating whether the new explanatory data is valid.
 Check the compatibility of the new exploratory data
 and the fitted model used for nowcast.
 }
+\keyword{internal}

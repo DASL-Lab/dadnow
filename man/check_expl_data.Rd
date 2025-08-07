@@ -15,3 +15,4 @@ Logical value indicating whether the data is valid
 \description{
 Check validity of explanatory data
 }
+\keyword{internal}
