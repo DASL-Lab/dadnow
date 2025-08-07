@@ -197,12 +197,15 @@ df.newdata = nowc$newdata.expl|>
  col.nowcast = 'indianred'
  cols  =  c(col.dad, col.explnew,col.nowcast, col.expl)
  g.nc = g.ts +
-   geom_point(data = df.newdata, aes(y = .data[[fitted.model$varname.expl]])) +
-   geom_ribbon(data = df.nowc, aes(x=date, ymin=nowcast.lo, ymax=nowcast.hi),
+   ggplot2::geom_point(data = df.newdata,
+                       ggplot2::aes(y = .data[[fitted.model$varname.expl]])) +
+   ggplot2::geom_ribbon(data = df.nowc,
+                        ggplot2::aes(x=date, ymin=nowcast.lo, ymax=nowcast.hi),
                alpha = 0.2, fill = col.nowcast, linewidth = 0.1)+
-   geom_line(data = df.nowc, aes(x=date, y=nowcast),linewidth = 1)+
-   scale_color_manual(values = cols)+
-   labs(title = paste('Time series nowcast'))
+   ggplot2::geom_line(data = df.nowc,
+                      ggplot2::aes(x=date, y=nowcast),linewidth = 1)+
+   ggplot2::scale_color_manual(values = cols)+
+   ggplot2::labs(title = paste('Time series nowcast'))
  g.nc
 }
 
