@@ -166,6 +166,21 @@ plot_timeseries_data <- function(fitted.model) {
 
 
 
+#' @title Plot the DAD nowcasting time series.
+#'
+#' @description
+#' Plot the nowcast DAD estimates along the new ("fresh")
+#' explanatory data that fed the nowcast and the past
+#' DAD and explanatory data that were used to fit the model.
+#'
+#'
+#' @param nowc List representing a nowcast object as returned
+#' by the function \code{nowcast()}.
+#'
+#' @returns A ggplot object.
+#' @export
+#'
+#' @examples
 plot_nowcast <- function(nowc) {
 
  df.nowc = nowc$nowcast |>
