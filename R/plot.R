@@ -157,7 +157,7 @@ plot_timeseries_data <- function(fitted.model) {
                         names_to = 'variable')
 
   g = dplot |>
-    ggplot2::ggplot(ggplot2::aes(x=date,, y = value, color = variable)) +
+    ggplot2::ggplot(ggplot2::aes(x=date, y = value, color = variable)) +
     ggplot2::geom_step(linewidth = 1) +
     ggplot2::theme_bw()+
     ggplot2::labs(title = 'Time series')
@@ -183,13 +183,15 @@ plot_timeseries_data <- function(fitted.model) {
 #' @examples
 plot_nowcast <- function(nowc) {
 
- df.nowc = nowc$nowcast |>
-   dplyr::mutate(variable = 'nowcast', value = 0)
- df.data = nowc$fitted.model$data
-df.newdata = nowc$newdata.expl|>
-  dplyr::mutate(variable ='new expl. data')
+  df.nowc = nowc$nowcast |>
+    dplyr::mutate(variable = 'nowcast', value = 0)
 
- g.ts = plot_timeseries_data(fitted.model)
+  df.data = nowc$fitted.model$data
+
+  df.newdata = nowc$newdata.expl|>
+    dplyr::mutate(variable ='new expl. data')
+
+  g.ts = plot_timeseries_data(fitted.model)
 
  col.dad = 'black'
  col.expl = 'steelblue1'
