@@ -7,7 +7,7 @@
 #'
 check_dad_data <- function(dad) {
 
-  required_cols = c("date", "virus", "geo", "count", "percapita")
+  required_cols = c("date", "virus", "geo")
   missing_cols = setdiff(required_cols, colnames(dad))
   if (length(missing_cols) > 0) {
     stop(paste("DAD data is missing required columns:", paste(missing_cols, collapse = ", ")))
