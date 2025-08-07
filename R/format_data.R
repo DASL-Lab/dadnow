@@ -11,8 +11,10 @@
 process_varname_dad <- function(data.dad, varname.dad) {
   if(varname.dad == 'count'){
     res = data.dad |>
-      dplyr::rename(count.dad = count) |>
-      dplyr::select(-percapita)
+      dplyr::rename(count.dad = count)
+
+    if('percapita' %in% names(res))
+      res = dplyr::select(res, -percapita)
   }
   if(varname.dad == 'percapita'){
     res = data.dad |>
