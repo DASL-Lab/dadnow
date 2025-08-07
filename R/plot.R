@@ -81,12 +81,12 @@ plot_fitted_model_lm <- function(fitted.model, ci) {
                          color = 'grey80', linetype = 'dashed')+
     # Fitted regression line
     ggplot2::geom_abline(intercept = int, slope = slope,
-                color = 'steelblue', linewidth = 2, alpha = 0.7)+
+                         color = 'steelblue', linewidth = 2, alpha = 0.7)+
     # Cosmetics
     ggplot2::theme(panel.grid = ggplot2::element_line('grey97'),
-          plot.subtitle = ggplot2::element_text(size = ggplot2::rel(0.6)))+
+                   plot.subtitle = ggplot2::element_text(size = ggplot2::rel(0.6)))+
     ggplot2::labs(title = paste('Fitted Model :', tt),
-         subtitle = subt, x=xlab, y = ylab)
+                  subtitle = subt, x=xlab, y = ylab)
   # g.xy
 
   col.fit    = 'indianred2'
@@ -193,22 +193,36 @@ plot_nowcast <- function(nowc) {
 
   g.ts = plot_timeseries_data(fitted.model)
 
- col.dad = 'black'
- col.expl = 'steelblue1'
- col.explnew = 'steelblue2'
- col.nowcast = 'indianred'
- cols  =  c(col.dad, col.explnew,col.nowcast, col.expl)
- g.nc = g.ts +
-   ggplot2::geom_point(data = df.newdata,
-                       ggplot2::aes(y = .data[[fitted.model$varname.expl]])) +
-   ggplot2::geom_ribbon(data = df.nowc,
-                        ggplot2::aes(x=date, ymin=nowcast.lo, ymax=nowcast.hi),
-               alpha = 0.2, fill = col.nowcast, linewidth = 0.1)+
-   ggplot2::geom_line(data = df.nowc,
-                      ggplot2::aes(x=date, y=nowcast),linewidth = 1)+
-   ggplot2::scale_color_manual(values = cols)+
-   ggplot2::labs(title = paste('Time series nowcast'))
- g.nc
+  # --- cosmetics
+
+  col.dad     = 'black'
+  col.expl    = 'steelblue1'
+  col.explnew = 'steelblue3'
+  col.nowcast = 'indianred'
+
+  v.dad  = paste0(nowc$fitted.model$varname.dad,'.dad')
+  v.expl = paste0(nowc$fitted.model$varname.expl,'.expl')
+
+  cols  =  c(col.dad,
+             col.expl,
+             `new expl. data` = col.explnew,
+             nowcast = col.nowcast)
+  names(cols)[1] = v.dad
+  names(cols)[2] = v.expl
+
+  # Build final plot
+
+  g.nc = g.ts +
+    ggplot2::geom_point(data = df.newdata,
+                        ggplot2::aes(y = .data[[fitted.model$varname.expl]])) +
+    ggplot2::geom_ribbon(data = df.nowc,
+                         ggplot2::aes(x=date, ymin=nowcast.lo, ymax=nowcast.hi),
+                         alpha = 0.2, fill = col.nowcast, linewidth = 0.1)+
+    ggplot2::geom_line(data = df.nowc,
+                       ggplot2::aes(x=date, y=nowcast),linewidth = 1)+
+    ggplot2::scale_color_manual(values = cols)+
+    ggplot2::labs(title = paste('Time series nowcast'))
+  g.nc
 }
 
 
