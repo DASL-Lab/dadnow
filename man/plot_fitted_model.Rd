@@ -4,13 +4,19 @@
 \alias{plot_fitted_model}
 \title{Plot fitted model and data used.}
 \usage{
-plot_fitted_model(fitted.model)
+plot_fitted_model(fitted.model, ci)
 }
 \arguments{
 \item{fitted.model}{List. Fitted model as created by the function \code{fit_model()}.}
+
+\item{ci}{Numerical. Confidence interval of the fit displayed.}
 }
 \value{
-A ggplot object.
+A list of ggplot objects:
+\itemize{
+  \item \code{xy}: scattered plot of data and regression line.
+  \item \code{timeseries}: fitted DAD time series in comparison with the actual data.
+}
 }
 \description{
 Plot fitted model and data used.

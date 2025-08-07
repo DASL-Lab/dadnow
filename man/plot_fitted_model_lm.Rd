@@ -4,13 +4,15 @@
 \alias{plot_fitted_model_lm}
 \title{Plot the fitted model: regression line, data points used for the fit and fit metrics.}
 \usage{
-plot_fitted_model_lm(fitted.model)
+plot_fitted_model_lm(fitted.model, ci)
 }
 \arguments{
 \item{fitted.model}{List. Fitted model as created by the function \code{fit_model()}.}
+
+\item{ci}{Numerical. Confidence level.}
 }
 \value{
-A ggplot object.
+A list of ggplot objects.
 }
 \description{
 Plot the fitted model: regression line, data points used for the fit and fit metrics.

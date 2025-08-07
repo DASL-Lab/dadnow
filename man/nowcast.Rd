@@ -17,7 +17,12 @@ nowcast(fitted.model, newdata.expl, ci = 0.95, floor.zero = TRUE)
 \item{floor.zero}{Logical. If `TRUE` nowcast will be floored at 0 when estimates are negatives.}
 }
 \value{
-Dataframe of nowcasted DAD values.
+A list:
+\itemize{
+    \item \code{nowcast}: Dataframe of nowcasted DAD values.
+    \item \code{fitted.model}: Fitted model used to nowcast.
+    \item \code{newdata.expl}: New explanatory data used to nowcast.
+}
 }
 \description{
 Nowcast DAD data using fresh explanatory data.

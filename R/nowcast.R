@@ -7,7 +7,13 @@
 #' @param ci Numerical. Confidence interval of the prediction. Must be between 0 and 1.
 #' @param floor.zero Logical. If `TRUE` nowcast will be floored at 0 when estimates are negatives.
 #'
-#' @returns Dataframe of nowcasted DAD values.
+#' @returns A list:
+#' \itemize{
+#'     \item \code{nowcast}: Dataframe of nowcasted DAD values.
+#'     \item \code{fitted.model}: Fitted model used to nowcast.
+#'     \item \code{newdata.expl}: New explanatory data used to nowcast.
+#' }
+#'
 #' @export
 #'
 #' @examples
@@ -44,6 +50,13 @@ nowcast <- function(fitted.model, newdata.expl,
     dplyr::rename(
       nowcast = fit, nowcast.lo = lwr, nowcast.hi = upr
     )
-  res = cbind(basedf, prdf)
+  df = cbind(basedf, prdf)
+
+  res = list(
+    nowcast = df,
+    fitted.model = fitted.model,
+    newdata.expl = newdata.expl
+  )
+
   return(res)
 }
