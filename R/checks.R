@@ -10,7 +10,7 @@ check_dad_data <- function(dad) {
   required_cols = c("date", "virus", "geo")
   check.colnames = all(required_cols %in% names(dad))
 
-  if (!all) {
+  if (!check.colnames) {
     stop(paste("DAD data must have columns:", paste(required_cols, collapse = ", ")))
   }
 
