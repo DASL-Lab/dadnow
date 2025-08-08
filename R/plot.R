@@ -55,16 +55,8 @@ plot_fitted_model_lm <- function(fitted.model, ci) {
 
   # Build plot
 
-  tt = paste(
-    fitted.model$family,
-    fitted.model$varname.dad,
-    fitted.model$varname.expl,
-    get_virus(fitted.model),
-    get_geo(fitted.model),
-    sep = ' / '
-  )
-  subt = paste0(
-    'slope = ', round(slope,3),
+  subt = paste0(id_model(fitted.model),
+    '\nslope = ', round(slope,3),
     ' ; intercept = ', round(int,3),
     ' ; R2adj = ', round(rsq,3)
   )
@@ -85,8 +77,9 @@ plot_fitted_model_lm <- function(fitted.model, ci) {
     # Cosmetics
     ggplot2::theme(panel.grid = ggplot2::element_line('grey97'),
                    plot.subtitle = ggplot2::element_text(size = ggplot2::rel(0.6)))+
-    ggplot2::labs(title = paste('Fitted Model :', tt),
-                  subtitle = subt, x=xlab, y = ylab)
+    ggplot2::labs(title = 'Fitted Model',
+                  subtitle = subt,
+                  x=xlab, y = ylab)
   # g.xy
 
   col.fit    = 'indianred2'
@@ -97,6 +90,9 @@ plot_fitted_model_lm <- function(fitted.model, ci) {
     filter(!is.na(variable)) |>
     ggplot2::ggplot(ggplot2::aes(x=date)) +
     ggplot2::theme_bw() +
+    ggplot2::theme(
+      plot.subtitle = ggplot2::element_text(size = ggplot2::rel(0.6)),
+      panel.grid.minor = element_line(color = 'grey97')) +
     ggplot2::geom_ribbon(data = dts,
                          ggplot2::aes(ymin = DAD.lo, ymax = DAD.hi),
                          alpha = 0.2, fill = col.fit)+
@@ -105,7 +101,8 @@ plot_fitted_model_lm <- function(fitted.model, ci) {
                                              grepl('(Actual|Expl)', variable)),
                         ggplot2::aes(x=date, color = variable, y = value))+
     ggplot2::scale_color_manual(values = c(col.actual, col.expl, col.fit))+
-    ggplot2::labs(title = paste('Fitted Model Time Series:', tt),
+    ggplot2::labs(title = 'Fitted Model Time Series',
+                  subtitle = id_model(fitted.model),
                   y = ifelse(is.log,'log(value)', 'value'))
   # g.ts
 
@@ -154,13 +151,18 @@ plot_timeseries_data <- function(fitted.model) {
 
   dplot = fitted.model$data |>
     tidyr::pivot_longer(cols = -c(date, virus, geo),
-                        names_to = 'variable')
+                        names_to = 'variable') |>
+    # Keep only the variable used in the model
+    dplyr::filter(grepl('(dad$|expl$)', variable))
 
   g = dplot |>
     ggplot2::ggplot(ggplot2::aes(x=date, y = value, color = variable)) +
-    ggplot2::geom_step(linewidth = 1) +
     ggplot2::theme_bw()+
-    ggplot2::labs(title = 'Time series')
+    ggplot2::geom_step(linewidth = 1) +
+     ggplot2::theme(panel.grid = ggplot2::element_line('grey97'),
+                   plot.subtitle = ggplot2::element_text(size = ggplot2::rel(0.6)))+
+    ggplot2::labs(title = 'Time series',
+                  subtitle = id_model(fitted.model))
   g
 }
 
@@ -220,6 +222,8 @@ plot_nowcast <- function(nowc) {
                          alpha = 0.2, fill = col.nowcast, linewidth = 0.1)+
     ggplot2::geom_line(data = df.nowc,
                        ggplot2::aes(x=date, y=nowcast),linewidth = 1)+
+     ggplot2::theme(panel.grid = ggplot2::element_line('grey97'),
+                   plot.subtitle = ggplot2::element_text(size = ggplot2::rel(0.6)))+
     ggplot2::scale_color_manual(values = cols)+
     ggplot2::labs(title = paste('Time series nowcast'))
   g.nc

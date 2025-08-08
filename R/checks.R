@@ -57,17 +57,19 @@ check_varname_dad <- function(varname.dad) {
   return(TRUE)
 }
 
-#' Check if the variable name for explanatory data is valid
+#'  Check if the variable name is present in the dataframe.
 #'
-#' @param data.expl Dataframe of explanatory data
-#' @param varname.expl String. Name of the variable in data.expl to use as an explanatory variable.
+#' @param data Dataframe of  data
+#' @param varname String. Name of the variable in data to use as a variable.
 #'
 #' @returns Logical value indicating whether the variable name is valid
 #' @keywords internal
 #'
-check_varname_expl <- function(data.expl, varname.expl) {
-  if (!varname.expl %in% colnames(data.expl)) {
-    stop(paste("varname.expl must be one of the columns in data.expl:", paste(colnames(data.expl), collapse = ", ")))
+check_varname <- function(data, varname) {
+  if (!varname %in% colnames(data)) {
+    stop(paste("Variable name '",varname,
+               "' not a variable of data; existing column names are:",
+               paste(colnames(data), collapse = ", ")))
   }
   return(TRUE)
 }

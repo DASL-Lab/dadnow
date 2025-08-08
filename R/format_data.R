@@ -9,18 +9,9 @@
 #' @keywords internal
 #'
 process_varname_dad <- function(data.dad, varname.dad) {
-  if(varname.dad == 'count'){
-    res = data.dad |>
-      dplyr::rename(count.dad = count)
 
-    if('percapita' %in% names(res))
-      res = dplyr::select(res, -percapita)
-  }
-  if(varname.dad == 'percapita'){
-    res = data.dad |>
-      dplyr::rename(percapita.dad = percapita) |>
-      dplyr::select(-count)
-  }
+  res = data.dad |>
+    rename(!!app_varname_dad(varname.dad) := !!varname.dad)
   return(res)
 }
 
@@ -36,7 +27,7 @@ process_varname_dad <- function(data.dad, varname.dad) {
 #'
 process_varname_expl <- function(data.expl, varname.expl) {
   res = data.expl |>
-    dplyr::rename(!!paste0(varname.expl, '.expl') := !!varname.expl)
+    dplyr::rename(!!app_varname_expl(varname.expl) := !!varname.expl)
 }
 
 

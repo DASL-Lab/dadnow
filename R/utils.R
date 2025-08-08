@@ -84,4 +84,23 @@ app_varname_expl <- function(v) {
   paste0(v,'.expl')
 }
 
+#' Create a unique ID for a fitted model.
+#'
+#' @param fitted.model List. Fitted model object.
+#'
+#' @returns String of the Id.
+#' @keywords internal
+#'
+id_model <- function(fitted.model) {
+  id = paste(
+    fitted.model$family,
+    get_virus(fitted.model),
+    get_geo(fitted.model),
+    paste0('DAD/', fitted.model$varname.dad),
+    paste0('Expl/', fitted.model$varname.expl),
+    sep = '_'
+  )
+  id
+}
+
 

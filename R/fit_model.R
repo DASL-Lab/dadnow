@@ -55,8 +55,8 @@ fit_model <- function(prm) {
   # Process inputs
   check_dad_data(data.dad)
   check_expl_data(data.expl)
-  check_varname_dad(varname.dad)
-  check_varname_expl(data.expl, varname.expl)
+  check_varname(data.dad, varname.dad)
+  check_varname(data.expl, varname.expl)
 
   datesrng = as.Date(date.range.fit)
   check_date_range_fit(datesrng)

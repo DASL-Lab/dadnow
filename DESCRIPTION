@@ -1,7 +1,7 @@
 Package: dadnow
 Type: Package
 Title: Nowcast DAD hospital admissions data
-Version: 0.6
+Version: 0.7
 Authors@R: c(
     person(
       "David", "Champredon",
