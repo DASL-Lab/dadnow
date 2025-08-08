@@ -221,9 +221,10 @@ plot_nowcast <- function(nowc) {
                          ggplot2::aes(x=date, ymin=nowcast.lo, ymax=nowcast.hi),
                          alpha = 0.2, fill = col.nowcast, linewidth = 0.1)+
     ggplot2::geom_line(data = df.nowc,
-                       ggplot2::aes(x=date, y=nowcast),linewidth = 1)+
-     ggplot2::theme(panel.grid = ggplot2::element_line('grey97'),
-                   plot.subtitle = ggplot2::element_text(size = ggplot2::rel(0.6)))+
+                       ggplot2::aes(x=date, y=nowcast),linewidth = 0.5)+
+     ggplot2::theme(
+       panel.grid = ggplot2::element_line('grey97'),
+       plot.subtitle = ggplot2::element_text(size = ggplot2::rel(0.6)))+
     ggplot2::scale_color_manual(values = cols)+
     ggplot2::labs(title = paste('Time series nowcast'))
   g.nc
