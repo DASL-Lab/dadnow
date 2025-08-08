@@ -85,6 +85,25 @@ filter_date_range_fit <- function(d,
   return(res)
 }
 
+
+
+#' Remove all NA from the joint data set
+#'
+#' @param df Dataframe of joint data
+#' @param varname.dad String. Variable used from the DAD data
+#' @param varname.expl String. Variable used from the explanatory data
+#'
+#' @returns Dataframe stripped of NAs
+#' @keywords internal
+#'
+remove_NAs <- function(df, varname.dad, varname.expl) {
+  idx.expl = which(!is.na(df[[app_varname_expl(varname.expl)]]))
+  idx.dad  = which(!is.na(df[[app_varname_dad(varname.dad)]]))
+  idx = intersect(idx.dad, idx.expl)
+  res = df[idx,]
+  return(res)
+}
+
 #' Process new explanatory data before nowcasting.
 #'
 #' @param newdata.expl Dataframe of new explanatory data
@@ -114,4 +133,55 @@ process_newdata_expl <- function(newdata.expl,
   return(res)
 }
 
+#' Add a tiny value to the elements of a vector that are equal to zero.
+#'
+#' @param x Vector of values.
+#'
+#' @returns A vector with zeros replaced by a tiny value.
+#' @keywords internal
+#'
+add_tiny <- function(x) {
 
+  idx.zeros = which(x==0)
+
+  if(length(idx.zeros)==0) {return(x)}
+
+  m = median(x[-idx.zeros])
+
+  # Case when x is _not_ a rate
+  if(m > 1) tiny = 0.1
+  # Case when x is likely a percentage
+  if(m > 0.005 & m <=1) tiny = 1e-4
+  # Case when x is likely a per capita rate
+  if(m <= 0.005 ) tiny = 1e-7
+
+  # Replace zeros with tiny value
+  res = x
+  res[idx.zeros] = tiny
+
+  return(res)
+}
+
+#' Replace zeros by a tiny value (avoids log(0) downstream).
+#'
+#' @param df Dataframe of values.
+#' @param varname.dad String. Name of the DAD variable whose zeros must be replaced by tiny value.
+#' @param varname.expl String. Name of the explanatory variable whose zeros must be replaced by tiny value.
+#'
+#' @keywords internal
+#'
+replace_zeros_by_tiny <- function(df,varname.dad, varname.expl) {
+
+  # identify the rows where there is 0 as data value
+  # idx0.dad  = which(df[[app_varname_dad(varname.dad)]] == 0)
+  # idx0.expl = which(df[[app_varname_expl(varname.expl)]] == 0)
+
+  vd = df[[app_varname_dad(varname.dad)]]
+  ve = df[[app_varname_expl(varname.expl)]]
+
+  res = df
+  res[[app_varname_dad(varname.dad)]] = add_tiny(vd)
+  res[[app_varname_expl(varname.expl)]] = add_tiny(ve)
+
+  return(res)
+}

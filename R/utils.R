@@ -73,3 +73,15 @@ get_geo <- function(fitted.model) {
   if(length(res) != 1) stop('More than one geography in fitted model is forbidden.')
   return(res)
 }
+
+
+app_varname_dad <- function(v) {
+  paste0(v,'.dad')
+}
+
+
+app_varname_expl <- function(v) {
+  paste0(v,'.expl')
+}
+
+

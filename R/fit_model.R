@@ -52,9 +52,6 @@ fit_model <- function(prm) {
   varname.expl   = prm$varname.expl
   date.range.fit = prm$date.range.fit
 
-  # data.dad = fake_dad()
-  # data.expl = fake_expl(data.dad)
-
   # Process inputs
   check_dad_data(data.dad)
   check_expl_data(data.expl)
@@ -64,14 +61,14 @@ fit_model <- function(prm) {
   datesrng = as.Date(date.range.fit)
   check_date_range_fit(datesrng)
 
-  # varname.dad = 'count'
-  # varname.expl = 'thecount'
-
-
   # prepare the data sets before model ingestion
   df = data.dad |>
-    join_dad_expl(data.expl, varname.dad, varname.expl) |>
-    filter_date_range_fit(datesrng)
+    join_dad_expl(data.expl,
+                  varname.dad = varname.dad,
+                  varname.expl = varname.expl) |>
+    filter_date_range_fit(datesrng) |>
+    remove_NAs(varname.dad = varname.dad,
+               varname.expl = varname.expl)
 
   if(family == 'lm') {
     # Fit a linear regression model
@@ -80,6 +77,11 @@ fit_model <- function(prm) {
       data = df
     )
   } else if(family == 'lm-log') {
+
+    df = replace_zeros_by_tiny(df,
+                               varname.dad = varname.dad,
+                               varname.expl = varname.expl)
+
     # Fit a linear regression model with log transformation
     m = lm(
       as.formula(paste0('log(', varname.dad, '.dad) ~ ',
