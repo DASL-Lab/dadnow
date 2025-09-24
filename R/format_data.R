@@ -11,7 +11,7 @@
 process_varname_dad <- function(data.dad, varname.dad) {
 
   res = data.dad |>
-    rename(!!app_varname_dad(varname.dad) := !!varname.dad)
+    dplyr::rename(!!app_varname_dad(varname.dad) := !!varname.dad)
   return(res)
 }
 

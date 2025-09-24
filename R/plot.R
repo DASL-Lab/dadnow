@@ -41,7 +41,7 @@ plot_fitted_model_lm <- function(fitted.model, ci) {
                              ci = ci)
 
   dts = cbind(data, dad.estim.fit) |>
-    rename(DAD.fit = fit, DAD.lo = lwr, DAD.hi = upr)
+    dplyr::rename(DAD.fit = fit, DAD.lo = lwr, DAD.hi = upr)
 
 
   dtslong = dts |>
