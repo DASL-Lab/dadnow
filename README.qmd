@@ -1,0 +1,81 @@
+---
+title: "dadnow - Nowcasting Discharge Abstract Database (DAD)"
+format: gfm
+execute:
+  cache: true
+---
+
+
+## Example Usage
+
+Start by loading the data. David has provided functions to produce sample data in the format expected by the functions.
+
+First, the DAD data:
+
+```{r}
+#| label: fit_model
+#| echo: true
+#| eval: true
+
+library(dadnow)
+
+set.seed(2112)
+data.dad  = fake_dad()
+data.expl = fake_expl(dad = data.dad)
+
+head(data.dad)
+```
+
+Next, generate the explanatory variables
+
+```{r}
+#| label: data_expl
+head(data.expl)
+```
+
+```{r}
+#| label: model_format
+prm = list(
+  family = 'lm',
+  data.dad = data.dad,
+  data.expl = data.expl,
+  varname.dad = 'count',
+  varname.expl = 'thecount',
+  date.range.fit = c('2020-01-10', '2020-12-15')
+)
+
+fitted.model = fit_model(prm)
+
+lapply(fitted.model, class)
+```
+
+```{r}
+#| label: xy_plot
+g.fit = plot_fitted_model(fitted.model)
+g.fit$xy
+```
+
+```{r}
+#| label: timeseries_plot
+g.fit$timeseries
+```
+
+```{r}
+#| label: nowcast_plot
+n = 15
+newdata.expl = data.frame(
+  date = data.expl$date[1:n] + 360,
+  virus = 'VXX',
+  geo = 'GZZ',
+  thecount = rpois(n, lambda = 20*c(1:n))
+)
+
+a = nowcast(fitted.model = fitted.model,
+            newdata.expl = newdata.expl)
+g.nowc = plot_nowcast(nowc = a)
+g.nowc
+
+```
+
+
+
