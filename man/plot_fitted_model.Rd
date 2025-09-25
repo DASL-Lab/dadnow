@@ -21,3 +21,25 @@ A list of ggplot objects:
 \description{
 Plot fitted model and data used.
 }
+\examples{
+set.seed(1234)
+
+data.dad  = fake_dad()
+data.expl = fake_expl(dad = data.dad)
+
+prm = list(
+ family = 'lm',
+ data.dad = data.dad,
+ data.expl = data.expl,
+ varname.dad = 'count',
+ varname.expl = 'thecount',
+ date.range.fit = c('2020-01-10', '2020-12-15')
+)
+
+fitted.model = fit_model(prm)
+
+g.fit = plot_fitted_model(fitted.model)
+g.fit$xy
+g.fit$timeseries
+
+}

@@ -48,3 +48,22 @@ and is set through the input parameter `varname.expl`.
 This function is a wrapper for several possible models. The type of the
 model used is set with the input parameter `family`.
 }
+\examples{
+
+set.seed(1234)
+
+data.dad  = fake_dad()
+data.expl = fake_expl(dad = data.dad)
+
+prm = list(
+ family = 'lm',
+ data.dad = data.dad,
+ data.expl = data.expl,
+ varname.dad = 'count',
+ varname.expl = 'thecount',
+ date.range.fit = c('2020-01-10', '2020-12-15')
+)
+
+fitted.model = fit_model(prm)
+
+}

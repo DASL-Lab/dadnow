@@ -80,7 +80,8 @@ check_varname <- function(data, varname) {
 #' The first date must be earlier than the second date.
 #' @keywords internal
 #'
-check_date_range_fit <- function(d) {
+check_date_range_fit <- function(date.fit.range) {
+  d = date.fit.range
   if (length(d) != 2) {
     stop("`date.range.fit` must be a vector of two dates.")
   }

@@ -15,5 +15,6 @@ Create fake DAD data for testing purposes.
 \examples{
 
 data.dad = fake_dad()
+head(data.dad)
 
 }

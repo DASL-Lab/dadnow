@@ -87,12 +87,12 @@ plot_fitted_model_lm <- function(fitted.model, ci) {
   col.expl   = 'steelblue2'
 
   g.ts = dtslong |>
-    filter(!is.na(variable)) |>
+    dplyr::filter(!is.na(variable)) |>
     ggplot2::ggplot(ggplot2::aes(x=date)) +
     ggplot2::theme_bw() +
     ggplot2::theme(
       plot.subtitle = ggplot2::element_text(size = ggplot2::rel(0.6)),
-      panel.grid.minor = element_line(color = 'grey97')) +
+      panel.grid.minor = ggplot2::element_line(color = 'grey97')) +
     ggplot2::geom_ribbon(data = dts,
                          ggplot2::aes(ymin = DAD.lo, ymax = DAD.hi),
                          alpha = 0.2, fill = col.fit)+
@@ -129,6 +129,26 @@ plot_fitted_model_lm <- function(fitted.model, ci) {
 #' @export
 #'
 #' @examples
+#'set.seed(1234)
+#'
+#'data.dad  = fake_dad()
+#'data.expl = fake_expl(dad = data.dad)
+#'
+#'prm = list(
+#'  family = 'lm',
+#'  data.dad = data.dad,
+#'  data.expl = data.expl,
+#'  varname.dad = 'count',
+#'  varname.expl = 'thecount',
+#'  date.range.fit = c('2020-01-10', '2020-12-15')
+#')
+#'
+#'fitted.model = fit_model(prm)
+#'
+#'g.fit = plot_fitted_model(fitted.model)
+#'g.fit$xy
+#'g.fit$timeseries
+#'
 plot_fitted_model <- function(fitted.model, ci) {
 
   family = fitted.model$family
@@ -147,6 +167,26 @@ plot_fitted_model <- function(fitted.model, ci) {
 #' @export
 #'
 #' @examples
+#'
+#' set.seed(1234)
+#'
+#' data.dad  = fake_dad()
+#' data.expl = fake_expl(dad = data.dad)
+#'
+#' prm = list(
+#'   family = 'lm',
+#'   data.dad = data.dad,
+#'   data.expl = data.expl,
+#'   varname.dad = 'count',
+#'   varname.expl = 'thecount',
+#'   date.range.fit = c('2020-01-10', '2020-12-15')
+#' )
+#'
+#' fitted.model = fit_model(prm)
+#'
+#' g = plot_timeseries_data(fitted.model)
+#' g
+#'
 plot_timeseries_data <- function(fitted.model) {
 
   dplot = fitted.model$data |>
@@ -183,6 +223,39 @@ plot_timeseries_data <- function(fitted.model) {
 #' @export
 #'
 #' @examples
+#'set.seed(1234)
+#'
+#'data.dad  = fake_dad()
+#'data.expl = fake_expl(dad = data.dad)
+#'
+#'prm = list(
+#'  family = 'lm',
+#'  data.dad = data.dad,
+#'  data.expl = data.expl,
+#'  varname.dad = 'count',
+#'  varname.expl = 'thecount',
+#'  date.range.fit = c('2020-01-10', '2020-12-15')
+#')
+#'
+#'fitted.model = fit_model(prm)
+#'
+#'g.fit = plot_fitted_model(fitted.model)
+#'g.fit$xy
+#'g.fit$timeseries
+#'
+#'
+#'n = 15
+#'newdata.expl = data.frame(
+#'  date = data.expl$date[1:n] + 360,
+#'  virus = 'VXX',
+#'  geo = 'GZZ',
+#'  thecount = rpois(n, lambda = 20*c(1:n))
+#')
+#'
+#'a = nowcast(fitted.model = fitted.model,
+#'            newdata.expl = newdata.expl)
+#'g.nowc = plot_nowcast(nowc = a)
+#'g.nowc
 plot_nowcast <- function(nowc) {
 
   df.nowc = nowc$nowcast |>
@@ -193,7 +266,7 @@ plot_nowcast <- function(nowc) {
   df.newdata = nowc$newdata.expl|>
     dplyr::mutate(variable ='new expl. data')
 
-  g.ts = plot_timeseries_data(fitted.model)
+  g.ts = plot_timeseries_data(fitted.model = nowc$fitted.model)
 
   # --- cosmetics
 

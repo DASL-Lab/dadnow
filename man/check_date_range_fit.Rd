@@ -4,7 +4,7 @@
 \alias{check_date_range_fit}
 \title{Check if the date range is valid}
 \usage{
-check_date_range_fit(d)
+check_date_range_fit(date.fit.range)
 }
 \arguments{
 \item{date.fit.range}{Vector of two dates.

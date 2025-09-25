@@ -18,5 +18,7 @@ Create fake explanatory data from existing DAD for testing purposes.
 \examples{
 data.dad = fake_dad()
 data.expl = fake_expl(data.dad)
+head(data.expl)
+
 
 }

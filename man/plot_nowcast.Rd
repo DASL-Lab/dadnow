@@ -18,3 +18,38 @@ Plot the nowcast DAD estimates along the new ("fresh")
 explanatory data that fed the nowcast and the past
 DAD and explanatory data that were used to fit the model.
 }
+\examples{
+set.seed(1234)
+
+data.dad  = fake_dad()
+data.expl = fake_expl(dad = data.dad)
+
+prm = list(
+ family = 'lm',
+ data.dad = data.dad,
+ data.expl = data.expl,
+ varname.dad = 'count',
+ varname.expl = 'thecount',
+ date.range.fit = c('2020-01-10', '2020-12-15')
+)
+
+fitted.model = fit_model(prm)
+
+g.fit = plot_fitted_model(fitted.model)
+g.fit$xy
+g.fit$timeseries
+
+
+n = 15
+newdata.expl = data.frame(
+ date = data.expl$date[1:n] + 360,
+ virus = 'VXX',
+ geo = 'GZZ',
+ thecount = rpois(n, lambda = 20*c(1:n))
+)
+
+a = nowcast(fitted.model = fitted.model,
+           newdata.expl = newdata.expl)
+g.nowc = plot_nowcast(nowc = a)
+g.nowc
+}

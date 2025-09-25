@@ -7,6 +7,7 @@
 #' @examples
 #'
 #' data.dad = fake_dad()
+#' head(data.dad)
 #'
 fake_dad <- function() {
   d = seq(as.Date("2020-01-01"), as.Date("2020-12-31"), by = "week")
@@ -34,6 +35,8 @@ fake_dad <- function() {
 #' @examples
 #' data.dad = fake_dad()
 #' data.expl = fake_expl(data.dad)
+#' head(data.expl)
+#'
 #'
 fake_expl <- function(dad) {
   n = nrow(dad)
