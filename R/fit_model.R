@@ -4,6 +4,7 @@
 
 prep_lm <- function(prm) {
   # Process inputs
+  check_prm_lm(prm)
   check_dad_data(prm$data.dad)
   check_expl_data(prm$data.expl)
   check_varname(prm$data.dad, prm$varname.dad)
@@ -23,6 +24,9 @@ prep_lm <- function(prm) {
 
   df
 }
+
+
+
 
 #' @title Fit a simple linear regression model
 #' 
@@ -50,6 +54,11 @@ fit_simple_lm <- function(prm) {
 }
 
 
+
+
+#' @title Fit log(dad) ~ log(expl)
+#' 
+#' @description Expects carefully constructed variable names. Fits a model of the form *.dad ~ *.expl
 fit_simple_log_log <- function(prm) {
   df <- prep_lm(prm) |> 
     replace_zeros_by_tiny(df,

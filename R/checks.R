@@ -153,3 +153,20 @@ check_newdata_expl <- function(newdata.expl, fitted.model) {
   return(TRUE)
 }
 
+#' @title Ensures prm has the correct arguments for lm
+#' 
+#' @keywords internal
+check_prm_lm <- function(prm) {
+  required_names <- c(
+    "family", "data.dad", "data.expl", "varname.dad",
+    "varname.expl", "date.range.fit")
+  missing_names = setdiff(required_names, names(prm))
+  if (length(missing_names) > 0) {
+    stop(
+      paste(
+        "prm is missing required parameters:",
+        paste(missing_names, collapse = ", ")))
+  }
+
+  return(TRUE)
+}
