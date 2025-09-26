@@ -1,3 +1,82 @@
+#' @title Prepare data for simple linear model
+#' 
+#' @description Internal. Ensures the variable names are as expected, joins the dad with the expl data, filters into the relevant date range, then removes NAs.
+
+prep_lm <- function(prm) {
+  # Process inputs
+  check_dad_data(prm$data.dad)
+  check_expl_data(prm$data.expl)
+  check_varname(prm$data.dad, prm$varname.dad)
+  check_varname(prm$data.expl, prm$varname.expl)
+
+  datesrng = as.Date(prm$date.range.fit)
+  check_date_range_fit(datesrng)
+
+  # prepare the data sets before model ingestion
+  df = data.dad |>
+    join_dad_expl(prm$data.expl,
+                  varname.dad = prm$varname.dad,
+                  varname.expl = prm$varname.expl) |>
+    filter_date_range_fit(datesrng) |>
+    remove_NAs(varname.dad = prm$varname.dad,
+               varname.expl = prm$varname.expl)
+
+  df
+}
+
+#' @title Fit a simple linear regression model
+#' 
+#' @description Expects carefully constructed variable names. Fits a model of the form *.dad ~ *.expl
+fit_simple_lm <- function(prm) {
+  df <- prep_lm(prm)
+
+  lm_formula <- as.formula(
+    paste0(prm$varname.dad, '.dad ~ ', prm$varname.expl, '.expl')
+  )
+
+  m = lm(
+    lm_formula,
+    data = df
+  )
+
+  list(
+    model          = m,
+    data           = df,
+    varname.dad    = varname.dad,
+    varname.expl   = varname.expl,
+    family         = family,
+    date.range.fit = datesrng
+  )
+}
+
+
+fit_simple_log_log <- function(prm) {
+  df <- prep_lm(prm) |> 
+    replace_zeros_by_tiny(df,
+      varname.dad = varname.dad,
+      varname.expl = varname.expl
+    )
+
+  ll_lm_formula <- as.formula(
+    paste0('log(', varname.dad, '.dad) ~ ', 'log(', varname.expl, '.expl)')
+  )
+
+  m = lm(
+    ll_lm_formula,
+    data = df
+  )
+
+  list(
+    model          = m,
+    data           = df,
+    varname.dad    = varname.dad,
+    varname.expl   = varname.expl,
+    family         = family,
+    date.range.fit = datesrng
+  )
+}
+
+
 #' @title Fit a model to the data.
 #'
 #' @description The goal of this function is to fit a statistical model, typically
@@ -60,61 +139,11 @@
 #'
 fit_model <- function(prm) {
 
-  # Unpack prameters
-  family         = prm$family
-  data.dad       = prm$data.dad
-  data.expl      = prm$data.expl
-  varname.dad    = prm$varname.dad
-  varname.expl   = prm$varname.expl
-  date.range.fit = prm$date.range.fit
-
-  # Process inputs
-  check_dad_data(data.dad)
-  check_expl_data(data.expl)
-  check_varname(data.dad, varname.dad)
-  check_varname(data.expl, varname.expl)
-
-  datesrng = as.Date(date.range.fit)
-  check_date_range_fit(datesrng)
-
-  # prepare the data sets before model ingestion
-  df = data.dad |>
-    join_dad_expl(data.expl,
-                  varname.dad = varname.dad,
-                  varname.expl = varname.expl) |>
-    filter_date_range_fit(datesrng) |>
-    remove_NAs(varname.dad = varname.dad,
-               varname.expl = varname.expl)
-
-  if(family == 'lm') {
-    # Fit a linear regression model
-    m = lm(
-      as.formula(paste0(varname.dad, '.dad ~ ', varname.expl, '.expl')),
-      data = df
-    )
-  } else if(family == 'lm-log') {
-
-    df = replace_zeros_by_tiny(df,
-                               varname.dad = varname.dad,
-                               varname.expl = varname.expl)
-
-    # Fit a linear regression model with log transformation
-    m = lm(
-      as.formula(paste0('log(', varname.dad, '.dad) ~ ',
-                        'log(', varname.expl, '.expl)')),
-      data = df
-    )
-  } else {
-    stop("Unsupported family type. Use 'lm' or 'lm-log'.")
-  }
-
-  res = list(
-    model          = m,
-    data           = df,
-    varname.dad    = varname.dad,
-    varname.expl   = varname.expl,
-    family         = family,
-    date.range.fit = datesrng
+  res <- switch(
+    EXPR = prm$family,
+    "lm" = fit_simple_lm(prm),
+    "lm-log" = fit_simple_log_log(prm),
+    stop("Unsupported family type. Currently supported families are 'lm' and 'lm-log'.")
   )
   return(res)
 }
